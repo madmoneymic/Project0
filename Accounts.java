@@ -21,7 +21,7 @@ package com.revature.beans;
 		private Double balance;
 		private AccountType type;
 		private boolean approved;
-		private List<Transaction> transactions;
+		//private List<Transaction> transactions;
 		
 		public Integer getId() {
 			return accountId;
@@ -53,12 +53,12 @@ package com.revature.beans;
 		public void setApproved(boolean approved) {
 			this.approved = approved;
 		}
-		public List<Transaction> getTransactions() {
-			return transactions;
-		}
-		public void setTransactions(List<Transaction> transactions) {
-			this.transactions = transactions;
-		}
+		//public List<Transaction> getTransactions() {
+		//	return transactions;
+		//}
+		//public void setTransactions(List<Transaction> transactions) {
+		//	this.transactions = transactions;
+		//}
 		public static long getSerialversionuid() {
 			return serialVersionUID;
 		}
@@ -71,7 +71,7 @@ package com.revature.beans;
 			result = prime * result + ((balance == null) ? 0 : balance.hashCode());
 			result = prime * result + ((accountId == null) ? 0 : accountId.hashCode());
 			result = prime * result + ((ownerId == null) ? 0 : ownerId.hashCode());
-			result = prime * result + ((transactions == null) ? 0 : transactions.hashCode());
+			//result = prime * result + ((transactions == null) ? 0 : transactions.hashCode());
 			result = prime * result + ((type == null) ? 0 : type.hashCode());
 			return result;
 		}
@@ -102,20 +102,20 @@ package com.revature.beans;
 					return false;
 			} else if (!ownerId.equals(other.ownerId))
 				return false;
-			if (transactions == null) {
-				if (other.transactions != null)
+			//if (transactions == null) {
+			//	if (other.transactions != null)
 					return false;
-			} else if (!transactions.equals(other.transactions))
-				return false;
-			if (type != other.type)
-				return false;
-			return true;
+			//} else if (!transactions.equals(other.transactions))
+			//	return false;
+			//if (type != other.type)
+			//	return false;
+			//return true;
 		}
 		
 		@Override
 		public String toString() {
 			return "Account [id=" + accountId + ", ownerId=" + ownerId + ", balance=" + balance + ", type=" + type + ", approved="
-					+ approved + ", transactions=" + transactions + "]";
+					+ approved + ", transactions=" +"]";
 		}
 		
 	}

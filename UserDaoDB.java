@@ -8,17 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-
-import com.revature.ArrayList;
-import com.revature.beans.Employee;
-import com.revature.beans.User;
+import com.revature.beans.Users;
 
 /**
  * Implementation of UserDAO that reads/writes to a relational database
  */
 public class UserDaoDB implements UserDao {
 	
-	public class BankCRUD {
 		private static Connection conn;
 		private static Statement stmt;
 		private static PreparedStatement pstmt;
@@ -26,70 +22,77 @@ public class UserDaoDB implements UserDao {
 		
 		public void getConnection() {
 			try{
-				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/revbank", "root", "root");
+				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/revbank", "root", "Meroe#@nehisi");
 			}catch(SQLException e) {
 				e.printStackTrace();
 			}
 		}
-	public User addUser(User user) {
+	public Users addUser(Users user) {
 		// TODO Auto-generated method stub
 		getConnection();
-		String query = "insert into user (id,firstname,lastname,usertype,acctid) values (?,?,?,?)";
+		String query = "INSERT INTO revbank.buser (idnum,Fname,Lname,Uname,Pword,Usertype) values (?,?,?,?,?,?)";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, user.getId());
-			pstmt.setString(2, firstname.getfirstName());
-			pstmt.setString(3, lastname.getlastName());
-			pstmt.setString(4, usertype.getUserType());
+			pstmt.setString(2, user.getFirstName());
+			pstmt.setString(3, user.getLastName());
+			pstmt.setString(4, user.getUsername());
+			pstmt.setString(5, user.getPassword());
 			pstmt.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();
-		return User;
+		}
+		return user;
 	}
 
-	public User getUser(Integer userId) {
+	public Users getUser(Integer idnum) {
 		// TODO Auto-generated method stub
 		getConnection();
-		String query = "select * from buser where id="+id;
-		buser = null;
+		String query = "select * from buser where id="+idnum;
+		Users buser = null;
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 			if(rs.next()) {
-				buser.setId(rs.getInt("id"));
-				buser.setFirstName(rs.getString("firstname"));
-				buser.setLastName(rs.getString("lastname"));
-				buser.setUserName(rs.getString("username"))
-				buser.setUserType(rs.getString("usertype"));
+				buser.getId(rs.getInt(idnum));
+				buser.getFirstName(rs.getString("Fname"));
+				buser.getLastName(rs.getString("Lname"));
+				buser.getUserName(rs.getString("Uname"));
+				buser.getPassword(rs.getString("Pword"));
+				buser.getUserType(rs.getString("Usertype"));
+				buser.getId(rs.getInt("Acctid"));
 			}
 	}catch(Exception e) {
+		e.printStackTrace();
 	}
-		return null;
+		return buser;
 	}
-
-	public User getUser(String username, String pass) {
+	
+	public Users getUser(String Uname, String Pword) {
 		// TODO Auto-generated method stub
 		getConnection();
-		buser=null;
-		String query = "select * from buser where username="+username;
+		Users buser=null;
+		String query = "select * from buser where username="+Uname;
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 		    if(rs.next()) {
-			  buser.setId(rs.getId("id"));
-			  buser.setFirstName(rs.getString("firstname"));
-			  buser.setLastName(rs.getString("lastname"));
-			  buser.setUserName(rs.getString("username"));
-			  buser.setUserType(rs.getString("usertype"));
+			  buser.getId(rs.getId("idnum"));
+			  buser.getFirstName(rs.getString("Fname"));
+			  buser.getLastName(rs.getString("Lname"));
+			  buser.getUserName(rs.getString("Uname"));
+			  buser.getPassword(rs.getString("Pword"));
+		    }
 		}catch(Exception e) {
+			e.printStackTrace();
 		}	
-		return null;
-	}
+		return buser;
+}
 
-	public List<User> getAllUsers() {
+	public List<Users> getAllUsers() {
 		// TODO Auto-generated method stub
 		getConnection();
-		List<User>bankList = new ArrayList<User>();
+		List<Users>bankList = new ArrayList<Users>();
 		String query = "select * from buser";
 		
 		try {
@@ -97,29 +100,32 @@ public class UserDaoDB implements UserDao {
 			rs = stmt.executeQuery(query);
 			
 			while(rs.next()) {
-				User buser = new User();
-				String query = "insert into buser(id,firstname,lastname,username) values (?,?,?,?)";
+				Users buser = new Users();
+				String query = "insert into buser(idnum,Fname,Lname,Uname,Pword) values (?,?,?,?,?)";
 			    pstmt = conn.prepareStatement(query);
-				pstmt.setInt(1,e.getId());
-				pstmt.setString(2,e.getFirstName());
-				pstmt.setString(3,e.getLastName());
-				pstmt.setString(4,e.getUserName());
+				pstmt.setInt(1,e.getId(idnum));
+				pstmt.setString(2,e.getFirstName(Fname));
+				pstmt.setString(3,e.getLastName(Lname));
+				pstmt.setString(4,e.getUserName(Uname));
+				pstmt.setString(5,e.getPassword(Pword));
 				pstmt.executeUpdate();
-				}catch(SQLException e) {
+				}
+		}catch(SQLException e) {
 					e.printStackTrace();
+		
 			}
 		return null;
 	}
 
-	public User updateUser(User u) {
+	public Users updateUser(Users u) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public boolean removeUser(User u) {
+	public boolean removeUser(Users u) {
 		// TODO Auto-generated method stub
 		getConnection();
-		String query = "delete from user where id =" +id;
+		String query = "delete from user where id =" u.getId();
 		return false;
 	}
 	
@@ -133,5 +139,6 @@ public class UserDaoDB implements UserDao {
 			conn.close();				
 	}catch(Exception e) {
 		e.printStackTrace();
+	}
 	}
 }

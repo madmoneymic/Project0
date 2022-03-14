@@ -1,9 +1,8 @@
 package com.revature.services;
 
 
-	import com.revature.beans.Account;
-	import com.revature.beans.User;
-	import com.revature.dao.AccountDao;
+	import com.revature.beans.*;
+	import com.revature.dao.AccountDao2;
 	import com.revature.exceptions.OverdraftException;
 
 	/**
@@ -11,10 +10,10 @@ package com.revature.services;
 	 */
 	public class AccountServices {
 		
-		public AccountDao actDao;
+		public AccountDao2 actDao;
 		public static final double STARTING_BALANCE = 25d;
 		
-		public AccountService(AccountDao dao) {
+		public AccountServices(AccountDao2 dao) {
 			this.actDao = dao;
 		}
 		
@@ -23,20 +22,34 @@ package com.revature.services;
 		 * @throws OverdraftException if amount is greater than the account balance
 		 * @throws UnsupportedOperationException if amount is negative
 		 */
-		public void withdraw(Account a, Double amount) {
+		public void withdraw(Accounts a, Double amount) {
+            double bal=0.0;
 			
+            bal=a.getBalance();
+			if (!a.isApproved()||(bal<amount)) {
+				throw new UnsupportedOperationException();
+			}else {
+				bal = bal - amount;
+				a.setBalance(amount);
+			}
 		}
 		
 		/**
 		 * Deposit funds to an account
 		 * @throws UnsupportedOperationException if amount is negative
 		 */
-		public void deposit(Account a, Double amount) {
-			if (!a.isApproved()) {
+		public void deposit(Accounts a, Double amount) {
+			double bal=0.0;
+			
+			
+			if (!a.isApproved()||(amount<0)) {
 				throw new UnsupportedOperationException();
-			}
+			}else {
+				bal=a.getBalance();
+				bal = bal + amount;
+				a.setBalance(amount);
 		}
-		
+		}	
 		/**
 		 * Transfers funds between accounts
 		 * @throws UnsupportedOperationException if amount is negative or 
@@ -46,16 +59,34 @@ package com.revature.services;
 		 * @param toAct the account to deposit to
 		 * @param amount the monetary value to transfer
 		 */
-		public void transfer(Account fromAct, Account toAct, double amount) {
+		public void transfer(Accounts fromAct, Accounts toAct, double amount) {
+			double fbal=0.0;
+			double tbal=0.0;
 			
+			fbal=fromAct.getBalance();
+			tbal=toAct.getBalance();
+			if (!fromAct.isApproved()||(!toAct.isApproved()||(amount<0))||(fbal<amount)) {
+				throw new UnsupportedOperationException();
+		    }else {
+		    	fbal=fbal-amount;
+		    	tbal=tbal+amount;
+		    	fromAct.setBalance(fbal);
+		    	toAct.setBalance(tbal);
+		    }
 		}
-		
 		/**
 		 * Creates a new account for a given User
 		 * @return the Account object that was created
 		 */
-		public Account createNewAccount(User u) {
-			return null;
+		public Accounts createNewAccount(Users u) {
+			int anum = 001;
+			Integer Oid = u.getId();
+			
+			Accounts newacct = new Accounts();
+			newacct.getSerialversionuid();
+			newacct.setOwnerId(Oid);
+			newacct.setId(anum);
+			return newacct;
 		}
 		
 		/**
@@ -65,7 +96,12 @@ package com.revature.services;
 		 * @throws UnauthorizedException if logged in user is not an Employee
 		 * @return true if account is approved, or false if unapproved
 		 */
-		public boolean approveOrRejectAccount(Account a, boolean approval) {
+		public boolean approveOrRejectAccount(Accounts a, boolean approval) {
+			Users emp = new Users();
+			
+			try {
+				
+			}
 			return false;
 		}
 	}

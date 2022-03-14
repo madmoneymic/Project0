@@ -3,7 +3,7 @@ package com.revature.dao;
 import java.util.List;
 
 import com.revature.beans.Accounts;
-import com.revature.beans.User2;
+import com.revature.beans.Users;
 
 /**
  * The data access object interface for CRUD operations on Accounts.
@@ -16,41 +16,41 @@ public interface AccountDao2 {
 	 * @param a the account object to add
 	 * @return the same account that was added
 	 */
-	public Account addAccount(Account a);
+	public Accounts addAccount(Accounts a);
 	
 	/**
 	 * Retrieves an account
 	 * @param actId the id of the account to retrieve
 	 * @return the account object
 	 */
-	public Account getAccount(Integer actId);
+	public Accounts getAccount(Integer actId);
 	
 	/**
 	 * Retrieves all accounts
 	 * @return a list of all accounts
 	 */
-	public List<Account> getAccounts();
+	public List<Accounts> getAccounts();
 	
 	/**
 	 * Retrieves accounts by a particular user
 	 * @param u the user object to search by
 	 * @return a list of accounts that the user owns
 	 */
-	public List<Account> getAccountsByUser(User u);
+	public List<Accounts> getAccountsByUser(Users u);
 	
 	/**
 	 * Updates a specific account
 	 * @param a the account to update
 	 * @return the updated account
 	 */
-	public Account updateAccount(Account a);
+	public Accounts updateAccount(Accounts a);
 	
 	/**
 	 * Deletes an account from the persistence layer
 	 * @param a the account to delete
 	 * @return true if the deletion was successful; false if not
 	 */
-	public boolean removeAccount(Account a);
-}package com.revature.dao;
+	public boolean removeAccount(Accounts a);
+}
 
 
